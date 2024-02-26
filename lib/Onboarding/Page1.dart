@@ -11,22 +11,19 @@ class Page1 extends StatefulWidget {
 class _Page1State extends State<Page1> {
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      builder: (_, child) => const SafeArea(
-        child: Scaffold(
-          body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  'You have pushed the button this many times:',
-                ),
-              ],
-            ),
+    return const SafeArea(
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'You have pushed the button this many times:',
+              ),
+            ],
           ),
         ),
       ),
-      designSize: const Size(375, 812),
     );
   }
 }
