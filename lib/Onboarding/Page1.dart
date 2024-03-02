@@ -1,6 +1,6 @@
+import 'package:Arogyam/Onboarding/send_otp.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:slide_to_act/slide_to_act.dart';
@@ -107,7 +107,7 @@ class _Page1State extends State<Page1> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 15.0, right: 15, top: 30),
+              padding: const EdgeInsets.only(left: 15.0, right: 15,  top: 100),
               child: SizedBox(
                 width: 311.w,
                 height: 64.w,
@@ -126,10 +126,11 @@ class _Page1State extends State<Page1> {
                       fontWeight: FontWeight.w400,
                       color: Colors.white),
                   onSubmit: () {
-                    Navigator.pushAndRemoveUntil(
+                    Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const Page1()),
-                      (route) => false, // Remove all routes from the stack
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              const SendOTP()), // Navigate to SendOTPPage
                     );
                   },
                 ),
