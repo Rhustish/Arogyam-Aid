@@ -18,22 +18,23 @@ class _SendOTPState extends State<SendOTP> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SizedBox(
-        height: 812.h,
-        width: 375.w,
-        child: Padding(
-          padding:
-              const EdgeInsets.symmetric(vertical: 100.0, horizontal: 30.0),
+      body: SingleChildScrollView(
+        child: SizedBox(
+          height: 812.h,
+          width: 375.w,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Center(
-                child: Text(
-                  "Let's get you in",
-                  style: GoogleFonts.lato(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w800,
+              Padding(
+                padding:  EdgeInsets.only(top:80.0.h),
+                child: Center(
+                  child: Text(
+                    "Let's get you in",
+                    style: GoogleFonts.lato(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w800,
+                    ),
                   ),
                 ),
               ),
@@ -82,32 +83,35 @@ class _SendOTPState extends State<SendOTP> {
                 ),
               ),
               const Spacer(),
-              SizedBox(
-                width: 311.w,
-                height: 64.w,
-                child: ElevatedButton(
-                  onPressed: () async{
-                    final phone = _phoneNumberController.text;                
-                    final supabase = Supabase.instance.client;
-                    supabase.auth.signInWithOtp(phone: phone);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => VerifyOTP(phone:phone)),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+              Padding(
+                padding: EdgeInsets.only(bottom:80.0.h),
+                child: SizedBox(
+                  width: 311.w,
+                  height: 64.w,
+                  child: ElevatedButton(
+                    onPressed: () async{
+                      final phone = _phoneNumberController.text;                
+                      final supabase = Supabase.instance.client;
+                      supabase.auth.signInWithOtp(phone: phone);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => VerifyOTP(phone:phone)),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.black,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                     ),
-                  ),
-                  child: Text(
-                    'Send OTP',
-                    style: GoogleFonts.lato(
-                      fontSize: 13.sp,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white,
+                    child: Text(
+                      'Send OTP',
+                      style: GoogleFonts.lato(
+                        fontSize: 13.sp,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),

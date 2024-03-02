@@ -26,91 +26,90 @@ class _Page1State extends State<Page1> {
       body: SizedBox(
         height: 812.h,
         width: 375.w,
-        child: Padding(
-          padding:
-              const EdgeInsets.only(top:0.0,bottom: 100.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Container(
-                width: 343.w,
-                height: 355.h,
-                child: Expanded(
-                  child: PageView.builder(
-                    itemCount: images.length,
-                    controller: PageController(viewportFraction: 1.0),
-                    onPageChanged: (index) {
-                      setState(() {
-                        currentIndex = index;
-                      });
-                    },
-                    itemBuilder: (context, index) {
-                      return SingleChildScrollView(
-                        child: SizedBox(
-                          width: 343.w,
-                          height: 355.h,
-                          child: Center(
-                            child: Image.asset(images[index]),
-                          ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              width: 343.w,
+              height: 355.h,
+              child: Expanded(
+                child: PageView.builder(
+                  itemCount: images.length,
+                  controller: PageController(viewportFraction: 1.0),
+                  onPageChanged: (index) {
+                    setState(() {
+                      currentIndex = index;
+                    });
+                  },
+                  itemBuilder: (context, index) {
+                    return SingleChildScrollView(
+                      child: SizedBox(
+                        width: 343.w,
+                        height: 355.h,
+                        child: Center(
+                          child: Image.asset(images[index]),
                         ),
-                      );
-                    },
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 255.w,
+              height: 48.w,
+              child: Center(
+                child: Text(
+                  'Aarogyam Aid',
+                  style: GoogleFonts.lato(
+                    fontSize: 36.sp,
+                    fontWeight: FontWeight.w800,
                   ),
                 ),
               ),
-              SizedBox(
-                width: 255.w,
-                height: 48.w,
-                child: Center(
-                  child: Text(
-                    'Aarogyam Aid',
-                    style: GoogleFonts.lato(
-                      fontSize: 36.sp,
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                ),
+            ),
+            SizedBox(
+              height: 20.w,
+            ),
+            Text(
+              "Explore personalised",
+              style: GoogleFonts.lato(
+                fontSize: 18.sp,
+                fontWeight: FontWeight.w700,
               ),
-              SizedBox(
-                height: 20.w,
+            ),
+            Text(
+              "insurance and government",
+              style: GoogleFonts.lato(
+                fontSize: 18.sp,
+                fontWeight: FontWeight.w700,
               ),
-              Text(
-                "Explore personalised",
-                style: GoogleFonts.lato(
-                  fontSize: 18.sp,
-                  fontWeight: FontWeight.w700,
-                ),
+            ),
+            Text(
+              "schemes..",
+              style: GoogleFonts.lato(
+                fontSize: 18.sp,
+                fontWeight: FontWeight.w700,
               ),
-              Text(
-                "insurance and government",
-                style: GoogleFonts.lato(
-                  fontSize: 18.sp,
-                  fontWeight: FontWeight.w700,
-                ),
+            ),
+            SizedBox(
+              height: 60.w,
+            ),
+            DotsIndicator(
+              dotsCount: images.length,
+              position: currentIndex.toDouble(),
+              decorator: DotsDecorator(
+                activeColor: const Color(0xff324fc5),
+                size: const Size.square(8.0),
+                activeSize: const Size(20.0, 8.0),
+                activeShape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.0)),
               ),
-              Text(
-                "schemes..",
-                style: GoogleFonts.lato(
-                  fontSize: 18.sp,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              SizedBox(
-                height: 60.w,
-              ),
-              DotsIndicator(
-                dotsCount: images.length,
-                position: currentIndex.toDouble(),
-                decorator: DotsDecorator(
-                  activeColor: const Color(0xff324fc5),
-                  size: const Size.square(8.0),
-                  activeSize: const Size(20.0, 8.0),
-                  activeShape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5.0)),
-                ),
-              ),
-              const Spacer(),
-              SizedBox(
+            ),
+            const Spacer(),
+            Padding(
+              padding: EdgeInsets.only(bottom:30.0.h),
+              child: SizedBox(
                 width: 311.w,
                 height: 64.w,
                 child: SlideAction(
@@ -137,8 +136,8 @@ class _Page1State extends State<Page1> {
                   },
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

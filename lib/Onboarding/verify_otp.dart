@@ -1,3 +1,5 @@
+import 'package:Arogyam/Onboarding/Page1.dart';
+import 'package:Arogyam/Onboarding/register.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -5,7 +7,7 @@ import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/otp_text_field.dart';
 import 'package:otp_text_field/style.dart';
-
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class VerifyOTP extends StatefulWidget {
   final String phone;
@@ -17,10 +19,10 @@ class VerifyOTP extends StatefulWidget {
 }
 
 class _VerifyOTPState extends State<VerifyOTP> {
-
   OtpFieldController otpController = OtpFieldController();
   late CountDownController _countDownController = CountDownController();
   bool isTimerCompleted = false;
+  var otpToken = "";
 
   @override
   void initState() {
@@ -45,12 +47,12 @@ class _VerifyOTPState extends State<VerifyOTP> {
       body: SizedBox(
         height: 812.h,
         width: 375.w,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 100.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              CircularCountDownTimer(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(top: 15.0.h),
+              child: CircularCountDownTimer(
                 textFormat: CountdownTextFormat.MM_SS,
                 duration: 60,
                 controller: _countDownController,
@@ -67,83 +69,91 @@ class _VerifyOTPState extends State<VerifyOTP> {
                   });
                 },
               ),
-              SizedBox(height: 50.w),
-              SizedBox(
-                width: 276.w,
-                height: 16.w,
-                child: Text(
-                  "OTP",
-                  style: GoogleFonts.lato(
-                    fontSize: 13.sp,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              SizedBox(height: 18.w),
-              SizedBox(
-                width: 276.w,
-                height: 40.w,
-                child: OTPTextField(
-                    controller: otpController,
-                    length: 4,
-                    width: MediaQuery.of(context).size.width,
-                    textFieldAlignment: MainAxisAlignment.spaceBetween,
-                    fieldWidth: 50,
-                    fieldStyle: FieldStyle.box,
-                    outlineBorderRadius: 10,
-                    style: const TextStyle(fontSize: 17),
-                    onCompleted: (pin) {
-                      print("Completed: " + pin);
-                    }),
-              ),
-              if (!isTimerCompleted) SizedBox(height: 44.w),
-              if (isTimerCompleted) SizedBox(height: 30.w),
-              if (isTimerCompleted)
-                SizedBox(
-                  width: 311.w,
-                  height: 14.w,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      // Implement resend OTP functionality
-                      _startTimer(); // Restart the timer
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor:
-                          Colors.white, // Set background color to transparent
-                      alignment:
-                          Alignment.centerRight, // Align text to the right
-                      elevation: 0,
-                    ),
-                    child: Text(
-                      'Resend OTP',
-                      style: GoogleFonts.lato(
-                        fontSize: 13.sp,
-                        fontWeight: FontWeight.w600,
-                        color: Color.fromRGBO(38, 60, 200, 100),
-                      ),
-                    ),
-                  ),
-                ),
-              SizedBox(height: 30.w),
-              Text(
-                "Enter OTP we sent on ${widget.phone}",
+            ),
+            SizedBox(height: 50.w),
+            SizedBox(
+              width: 276.w,
+              height: 16.w,
+              child: Text(
+                "OTP",
                 style: GoogleFonts.lato(
                   fontSize: 13.sp,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.grey[600],
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              const Spacer(),
+            ),
+            SizedBox(height: 18.w),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 45.0.w),
+              child: OTPTextField(
+                  controller: otpController,
+                  length: 6,
+                  width: MediaQuery.of(context).size.width,
+                  textFieldAlignment: MainAxisAlignment.spaceAround,
+                  fieldWidth: 45,
+                  fieldStyle: FieldStyle.box,
+                  outlineBorderRadius: 15,
+                  style: TextStyle(fontSize: 17),
+                  onCompleted: (pin) {
+                    setState(() {
+                      otpToken = pin.toString();
+                      print(otpToken);
+                    });
+                  }),
+            ),
+            if (!isTimerCompleted) SizedBox(height: 44.w),
+            if (isTimerCompleted) SizedBox(height: 30.w),
+            if (isTimerCompleted)
               SizedBox(
+                width: 311.w,
+                height: 14.w,
+                child: ElevatedButton(
+                  onPressed: () {
+                    // Implement resend OTP functionality
+                    _startTimer(); // Restart the timer
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor:
+                        Colors.white, 
+                    alignment: Alignment.centerRight, 
+                    elevation: 0,
+                  ),
+                  child: Text(
+                    'Resend OTP',
+                    style: GoogleFonts.lato(
+                      fontSize: 13.sp,
+                      fontWeight: FontWeight.w600,
+                      color: Color.fromRGBO(38, 60, 200, 100),
+                    ),
+                  ),
+                ),
+              ),
+            SizedBox(height: 30.w),
+            Text(
+              "Enter OTP we sent on ${widget.phone}",
+              style: GoogleFonts.lato(
+                fontSize: 13.sp,
+                fontWeight: FontWeight.w600,
+                color: Colors.grey[600],
+              ),
+            ),
+            const Spacer(),
+            Padding(
+              padding: EdgeInsets.only(bottom: 80.0.h),
+              child: SizedBox(
                 width: 311.w,
                 height: 64.w,
                 child: ElevatedButton(
-                  onPressed: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //       builder: (context) => const VerifyOTP()),
-                    // );
+                  onPressed: () async {
+                      await Supabase.instance.client.auth.verifyOTP(
+                        phone: widget.phone,
+                        token: otpToken,
+                        type: OtpType.sms,
+                      );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const Register()),
+                      );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.black,
@@ -161,8 +171,8 @@ class _VerifyOTPState extends State<VerifyOTP> {
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
