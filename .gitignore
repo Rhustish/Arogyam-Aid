@@ -9,6 +9,7 @@
 .history
 .svn/
 migrate_working_dir/
+lib/services/supabase.credentials.dart
 
 # IntelliJ related
 *.iml

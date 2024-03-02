@@ -6,14 +6,18 @@ import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/otp_text_field.dart';
 import 'package:otp_text_field/style.dart';
 
+
 class VerifyOTP extends StatefulWidget {
-  const VerifyOTP({Key? key}) : super(key: key);
+  final String phone;
+
+  const VerifyOTP({Key? key, required this.phone}) : super(key: key);
 
   @override
   State<VerifyOTP> createState() => _VerifyOTPState();
 }
 
 class _VerifyOTPState extends State<VerifyOTP> {
+
   OtpFieldController otpController = OtpFieldController();
   late CountDownController _countDownController = CountDownController();
   bool isTimerCompleted = false;
@@ -26,7 +30,7 @@ class _VerifyOTPState extends State<VerifyOTP> {
   }
 
   void _startTimer() {
-    _countDownController.restart(duration: 30);
+    _countDownController.restart(duration: 60);
     setState(() {
       isTimerCompleted = false;
     });
@@ -42,14 +46,13 @@ class _VerifyOTPState extends State<VerifyOTP> {
         height: 812.h,
         width: 375.w,
         child: Padding(
-          padding:
-              const EdgeInsets.symmetric(vertical: 100.0, horizontal: 30.0),
+          padding: const EdgeInsets.symmetric(vertical: 100.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               CircularCountDownTimer(
                 textFormat: CountdownTextFormat.MM_SS,
-                duration: 30,
+                duration: 60,
                 controller: _countDownController,
                 isReverse: true,
                 width: 150.w,
@@ -93,10 +96,8 @@ class _VerifyOTPState extends State<VerifyOTP> {
                       print("Completed: " + pin);
                     }),
               ),
-              if(!isTimerCompleted)
-                SizedBox(height: 44.w),
-              if(isTimerCompleted)
-                SizedBox(height:30.w),
+              if (!isTimerCompleted) SizedBox(height: 44.w),
+              if (isTimerCompleted) SizedBox(height: 30.w),
               if (isTimerCompleted)
                 SizedBox(
                   width: 311.w,
@@ -125,7 +126,7 @@ class _VerifyOTPState extends State<VerifyOTP> {
                 ),
               SizedBox(height: 30.w),
               Text(
-                "Enter OTP we sent on XXXXXXXX40",
+                "Enter OTP we sent on ${widget.phone}",
                 style: GoogleFonts.lato(
                   fontSize: 13.sp,
                   fontWeight: FontWeight.w600,
@@ -138,11 +139,11 @@ class _VerifyOTPState extends State<VerifyOTP> {
                 height: 64.w,
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const VerifyOTP()),
-                    );
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //       builder: (context) => const VerifyOTP()),
+                    // );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.black,
