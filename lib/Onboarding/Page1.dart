@@ -113,7 +113,7 @@ class _Page1State extends State<Page1> {
                 width: 311.w,
                 height: 64.w,
                 child: SlideAction(
-                  borderRadius: 6,
+                  borderRadius: 10,
                   elevation: 1,
                   innerColor: Colors.white,
                   outerColor: Colors.black,
